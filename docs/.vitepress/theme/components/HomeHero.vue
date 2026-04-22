@@ -1,6 +1,6 @@
 <script setup>
 import { Sparkles, Search } from 'lucide-vue-next'
-import { useData, useRouter } from 'vitepress'
+import { useData, useRouter, withBase } from 'vitepress'
 import { computed, onMounted, ref, watch } from 'vue'
 
 const props = defineProps({
@@ -40,7 +40,7 @@ const normalizeSetCode = code => code.trim().toLowerCase().replace(/[^a-z0-9]/g,
 const toSetPath = code => {
   const normalized = normalizeSetCode(code)
   if (!normalized) return '/'
-  return `/sets/${normalized}`
+  return `/sets/${normalized}.html`
 }
 
 const matchingSets = computed(() => {
@@ -52,11 +52,11 @@ const matchingSets = computed(() => {
 const showResults = computed(() => matchingSets.value.length > 0)
 
 const goToSet = code => {
-  router.go(toSetPath(code))
+  router.go(withBase(toSetPath(code)))
 }
 
 const goHome = () => {
-  router.go('/')
+  router.go(withBase('/'))
 }
 
 const selectSet = code => {
@@ -208,6 +208,18 @@ watch(setCode, () => {
               </div>
             </button>
           </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-3">
+          <a
+            v-for="set in setIndex"
+            :key="set.code"
+            :href="withBase(toSetPath(set.code))"
+            class="px-5 py-3 rounded-2xl border-2 font-black tracking-tight transition-colors bg-white text-black border-zinc-200 hover:border-zinc-400"
+          >
+            {{ set.code }}
+            <span class="font-bold text-zinc-600">— {{ set.name }}</span>
+          </a>
         </div>
       </div>
 

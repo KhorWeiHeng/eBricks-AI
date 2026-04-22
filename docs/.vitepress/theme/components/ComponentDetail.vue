@@ -1,6 +1,7 @@
 <script setup>
 import { ArrowLeft, Box, Zap, Info, Terminal, Code } from 'lucide-vue-next'
 import { computed } from 'vue'
+import { withBase } from 'vitepress'
 
 const props = defineProps({
   component: {
@@ -172,6 +173,8 @@ const imagesByAfter = computed(() => {
 })
 
 const imagesAfter = after => imagesByAfter.value.get(after) || []
+
+const backHref = computed(() => withBase('/sets/eb803.html'))
 </script>
 
 <template>
@@ -179,7 +182,7 @@ const imagesAfter = after => imagesByAfter.value.get(after) || []
     <div class="max-w-7xl mx-auto space-y-32">
       <!-- Breadcrumb -->
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
-        <a href="/sets/eb803" class="inline-flex items-center space-x-3 text-black hover:text-brick-blue transition-colors group font-black uppercase tracking-[0.2em] text-xs">
+        <a :href="backHref" class="inline-flex items-center space-x-3 text-black hover:text-brick-blue transition-colors group font-black uppercase tracking-[0.2em] text-xs">
           <ArrowLeft class="w-4 h-4 group-hover:-translate-x-2 transition-transform" />
           <span>Back to Baseplate</span>
         </a>

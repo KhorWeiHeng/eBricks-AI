@@ -1,5 +1,6 @@
 <script setup>
 import { ArrowRight } from 'lucide-vue-next'
+import { withBase } from 'vitepress'
 import { computed } from 'vue'
 
 const props = defineProps({
@@ -56,10 +57,12 @@ const accentStyle = computed(() => ({
   backgroundColor: resolvedHexColor.value,
   '--brick-glow-rgb': toRgbCsv(resolvedHexColor.value),
 }))
+
+const href = computed(() => withBase(props.product?.url || ''))
 </script>
 
 <template>
-  <a :href="product.url" class="glow-on-hover block group">
+  <a :href="href" class="glow-on-hover block group">
     <div :class="[
       'relative h-96 w-full rounded-4xl shadow-brick hover:shadow-brick-hover polished-plastic glow-dynamic transition-all duration-300 hover:-translate-y-3',
       accentClasses
